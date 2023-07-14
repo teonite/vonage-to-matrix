@@ -1,31 +1,30 @@
-use actix_web::{post};
+use actix_web::{HttpResponse, post, web};
 use log::{info};
-use serde::Deserialize;
-use serde_querystring_actix::QueryString;
+use serde::{Deserialize, Serialize};
 use serde;
 use actix_web::web::ServiceConfig;
 
 
-#[derive(Deserialize)]
+#[derive(Deserialize, Serialize)]
 pub struct VonageInboundMessage {
-    // msisdn: String,
-    // to: String,
-    // #[serde(alias = "messageId")]
-    // message_id: String,
-    text: String,
-    // #[serde(alias = "type")]
-    // message_type: String,
-    // keyword: String,
-    // #[serde(alias = "api-key")]
-    // api_key: String,
-    // #[serde(alias = "message-timestamp")]
-    // message_timestamp: String,
+    pub msisdn: String,
+    pub to: String,
+    #[serde(alias = "messageId")]
+    pub message_id: String,
+    pub text: String,
+    #[serde(alias = "type")]
+    pub message_type: String,
+    pub keyword: String,
+    #[serde(alias = "api-key")]
+    pub api_key: String,
+    #[serde(alias = "message-timestamp")]
+    pub message_timestamp: String,
 }
 
 #[post("/api/inbound-message")]
-async fn handle_inbound_message(QueryString(message): QueryString<VonageInboundMessage>) -> String {
-    info!("Received message {}", message.text);
-    format!("Received message {}", message.text)
+async fn handle_inbound_message(web::Form(form): web::Form<VonageInboundMessage>) -> HttpResponse {
+    info!("Received message {}", form.text);
+    HttpResponse::Ok().finish()
 }
 
 pub fn config_service(config: &mut ServiceConfig) {

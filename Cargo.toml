@@ -8,9 +8,5 @@ edition = "2021"
 [dependencies]
 actix-web = "4.3.1"
 env_logger = "0.10.0"
-json = "0.12.4"
 log = "0.4.19"
-querystring = "1.1.0"
-serde = "1.0.171"
-serde-querystring = "0.2.1"
-serde-querystring-actix = "0.2.0"
+serde = { version = "1.0.171", features = ["derive"] }
