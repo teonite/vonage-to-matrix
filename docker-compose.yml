@@ -1,0 +1,8 @@
+services:
+  vonage-to-matrix:
+    build: .
+    image: registry.teonite.net/teonite/vonage-to-matrix
+    ports:
+      - 8080:8080
+    environment:
+      RUST_LOG: info
