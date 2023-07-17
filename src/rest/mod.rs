@@ -25,23 +25,15 @@ pub struct VonageInboundMessage {
 pub struct VonageInboundCall {
     pub call_id: String,
     pub status: String,
-    #[serde(alias = "call-direction")]
     pub call_direction: String,
     pub to: String,
     pub from: String,
-    #[serde(alias = "call-request")]
     pub call_request: String,
-    #[serde(alias = "network-code")]
     pub network_code: String,
-    #[serde(alias = "call-duration")]
     pub call_duration: String,
-    #[serde(alias = "call-start")]
     pub call_start: String,
-    #[serde(alias = "call-end")]
     pub call_end: String,
-    #[serde(alias = "call-price")]
     pub call_price: String,
-    #[serde(alias = "call-rate")]
     pub call_rate: String,
 }
 
