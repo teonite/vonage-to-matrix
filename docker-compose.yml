@@ -1,6 +1,6 @@
 services:
   vonage-to-matrix:
-    build: .
+    build: vonage-to-matrix
     ports:
       - 8080:8080
     environment:

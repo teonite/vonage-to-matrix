@@ -1,5 +1,6 @@
 use actix_web::{test, App};
-use vonage_to_matrix::rest::{config_service, VonageInboundCall, VonageInboundMessage};
+use vonage_to_matrix::rest::{config_service};
+use vonage::{VonageInboundMessage, VonageInboundCall};
 
 
 #[actix_web::test]
