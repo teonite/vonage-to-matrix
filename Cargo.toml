@@ -11,3 +11,5 @@ env_logger = "0.10.0"
 log = "0.4.19"
 vonage = { path = "vonage" }
 hookshot = { path = "hookshot" }
+toml = "0.7.6"
+serde = { version = "1.0.171", features = ["derive"] }

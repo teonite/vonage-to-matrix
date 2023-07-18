@@ -1,0 +1,7 @@
+[hookshot]
+url = "https://hookshot.teonite.net/webhook/141d7f48-862e-42a8-a1e7-efab3a37ed09"
+
+[vonage]
+[vonage.labels]
+48780909100 = "Poland"
+16692609100 = "United States"

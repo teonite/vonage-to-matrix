@@ -2,8 +2,8 @@ use std::collections::HashMap;
 use reqwest::{Error, Response};
 use log::{info};
 
-pub async fn send_text_message(webhook_url: &str, text: String) -> Result<Response, Error> {
-    info!("Sending message {} to {}", text, webhook_url);
+pub async fn send_text_message(webhook_url: String, text: String) -> Result<Response, Error> {
+    info!("Sending message '{}' to {}", text, webhook_url);
 
     let mut map = HashMap::new();
     map.insert("text", text);
