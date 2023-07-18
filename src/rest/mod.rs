@@ -25,15 +25,16 @@ pub struct Config {
 #[post("/api/inbound-message")]
 async fn handle_inbound_message(web::Form(form): web::Form<VonageInboundMessage>, config: web::Data<Config>) -> HttpResponse {
     info!("Received message from {}", form.msisdn);
-    let label = config.vonage.labels.get(form.to.as_str()).unwrap();
-    let message = format!("Received text message from {} (to number: {} [{}]): {}", form.msisdn, label, form.to, form.text);
+    let vonage_label = config.vonage.labels.get(form.to.as_str()).unwrap();
+    let message = format!("Received text message from {} (to number: {} [{}]): {}", form.msisdn, vonage_label, form.to, form.text);
     handle_vonage_event(config.hookshot.url.clone(), message).await
 }
 
 #[post("/api/inbound-call")]
 async fn handle_inbound_call(web::Form(form): web::Form<VonageInboundCall>, config: web::Data<Config>) -> HttpResponse {
     info!("Received call from {}", form.from);
-    let message = format!("Received call from {}", form.from);
+    let vonage_label = config.vonage.labels.get(form.to.as_str()).unwrap();
+    let message = format!("Received call from {} (to number: {} [{}])", form.from, vonage_label, form.to);
     handle_vonage_event(config.hookshot.url.clone(), message).await
 }
 
