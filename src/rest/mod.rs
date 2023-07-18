@@ -1,7 +1,8 @@
 use std::collections::HashMap;
 use std::fs;
 use actix_web::{HttpResponse, post, web};
-use log::{info};
+use actix_web::web::Data;
+use log::{info, warn};
 use vonage::{VonageInboundMessage, VonageInboundCall};
 use hookshot::{send_text_message};
 use serde::{Deserialize};
@@ -25,7 +26,7 @@ pub struct Config {
 #[post("/api/inbound-message")]
 async fn handle_inbound_message(web::Form(form): web::Form<VonageInboundMessage>, config: web::Data<Config>) -> HttpResponse {
     info!("Received message from {}", form.msisdn);
-    let vonage_label = config.vonage.labels.get(form.to.as_str()).unwrap();
+    let vonage_label = get_vonage_label(form.to.clone(), &config);
     let message = format!("Received text message from {} (to number: {} [{}]): {}", form.msisdn, vonage_label, form.to, form.text);
     handle_vonage_event(config.hookshot.url.clone(), message).await
 }
@@ -33,7 +34,7 @@ async fn handle_inbound_message(web::Form(form): web::Form<VonageInboundMessage>
 #[post("/api/inbound-call")]
 async fn handle_inbound_call(web::Form(form): web::Form<VonageInboundCall>, config: web::Data<Config>) -> HttpResponse {
     info!("Received call from {}", form.from);
-    let vonage_label = config.vonage.labels.get(form.to.as_str()).unwrap();
+    let vonage_label = get_vonage_label(form.to.clone(), &config);
     let message = format!("Received call from {} (to number: {} [{}])", form.from, vonage_label, form.to);
     handle_vonage_event(config.hookshot.url.clone(), message).await
 }
@@ -43,6 +44,16 @@ async fn handle_vonage_event(hookshot_webhook_url: String, message: String) -> H
     match result {
         Ok(_) => HttpResponse::Ok().finish(),
         Err(_) => HttpResponse::ServiceUnavailable().finish(),
+    }
+}
+
+fn get_vonage_label(to_number: String, config: &Data<Config>) -> String {
+    match config.vonage.labels.get(to_number.as_str()) {
+        Some(l) => l.clone(),
+        None => {
+            warn!("Returning default label for number {}", to_number);
+            String::from("Unlabeled")
+        }
     }
 }
 
