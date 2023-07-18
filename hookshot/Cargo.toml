@@ -1,13 +1,11 @@
 [package]
-name = "vonage-to-matrix"
+name = "hookshot"
 version = "0.1.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-actix-web = "4.3.1"
-env_logger = "0.10.0"
 log = "0.4.19"
-vonage = { path = "vonage" }
-hookshot = { path = "hookshot" }
+reqwest = { version = "0.11.18", features = ["json"] }
+serde = { version = "1.0.171", features = ["derive"] }
