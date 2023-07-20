@@ -1,7 +1,9 @@
 services:
   vonage-to-matrix:
-    build: vonage-to-matrix
+    build: .
     ports:
       - 8080:8080
     environment:
       RUST_LOG: info
+    volumes:
+      - ./config.toml:/opt/config.toml
