@@ -1,9 +1,9 @@
-use std::collections::HashMap;
+use log::info;
 use reqwest::{Error, Response};
-use log::{info};
+use std::collections::HashMap;
 
-pub async fn send_text_message(webhook_url: String, text: String) -> Result<Response, Error> {
-    info!("Sending message '{}' to {}", text, webhook_url);
+pub async fn send_text_message(webhook_url: &str, text: String) -> Result<Response, Error> {
+    info!("Sending message '{text}' to {webhook_url}");
 
     let mut map = HashMap::new();
     map.insert("text", text);
@@ -14,13 +14,5 @@ pub async fn send_text_message(webhook_url: String, text: String) -> Result<Resp
     #[cfg(test)]
     let client = reqwest_mock::Client::new();
 
-    client.post(webhook_url)
-        .json(&map)
-        .send()
-        .await
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
+    client.post(webhook_url).json(&map).send().await
 }

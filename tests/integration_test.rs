@@ -1,19 +1,18 @@
+use actix_web::{test, web, App};
 use std::collections::HashMap;
-use actix_web::{test, App, web};
-use vonage_to_matrix::rest::{Config, config_service, HookshotConfig, VonageConfig};
-use vonage::{VonageInboundMessage, VonageInboundCall};
-
+use vonage::{VonageInboundCall, VonageInboundMessage};
+use vonage_to_matrix::rest::{config_service, Config, HookshotConfig, VonageConfig};
 
 fn config_app_data(config: &mut web::ServiceConfig) {
     let hookshot_config = HookshotConfig {
-        url: String::from("https://example.com")
+        url: String::from("https://example.com"),
     };
 
     let vonage_config = VonageConfig {
         labels: HashMap::from([
             (String::from("48780909100"), String::from("Poland")),
             (String::from("16692609100"), String::from("United States")),
-        ])
+        ]),
     };
 
     let app_config = Config {
@@ -21,17 +20,15 @@ fn config_app_data(config: &mut web::ServiceConfig) {
         vonage: vonage_config,
     };
 
-    config
-        .app_data(web::Data::new(app_config));
+    config.app_data(web::Data::new(app_config));
 }
-
 
 #[actix_web::test]
 async fn test_handle_inbound_message() {
     let app = test::init_service(
         App::new()
             .configure(config_service)
-            .configure(config_app_data)
+            .configure(config_app_data),
     )
     .await;
 
@@ -43,21 +40,23 @@ async fn test_handle_inbound_message() {
         message_type: String::from("text"),
         keyword: String::from("TEST"),
         api_key: String::from("56376bb4"),
-        message_timestamp: String::from("2023-07-12+15:30:47")
+        message_timestamp: String::from("2023-07-12+15:30:47"),
     };
 
-    let req = test::TestRequest::post().uri("/api/inbound-message").set_form(form).to_request();
+    let req = test::TestRequest::post()
+        .uri("/api/inbound-message")
+        .set_form(form)
+        .to_request();
     let resp = test::call_service(&app, req).await;
     assert!(resp.status().is_success());
 }
-
 
 #[actix_web::test]
 async fn test_handle_inbound_call() {
     let app = test::init_service(
         App::new()
             .configure(config_service)
-            .configure(config_app_data)
+            .configure(config_app_data),
     )
     .await;
 
@@ -76,7 +75,10 @@ async fn test_handle_inbound_call() {
         call_rate: String::from("0.00720000"),
     };
 
-    let req = test::TestRequest::post().uri("/api/inbound-call").set_form(form).to_request();
+    let req = test::TestRequest::post()
+        .uri("/api/inbound-call")
+        .set_form(form)
+        .to_request();
     let resp = test::call_service(&app, req).await;
     assert!(resp.status().is_success());
 }
