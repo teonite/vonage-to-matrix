@@ -3,12 +3,10 @@ name = "hookshot"
 version = "0.1.0"
 edition = "2021"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
 [dependencies]
-log = "0.4.19"
-reqwest = { version = "0.11.18", features = ["json"] }
-serde = { version = "1.0.171", features = ["derive"] }
+log = "0.4"
+reqwest = { version = "0.11", features = ["json"] }
+serde = { version = "1.0", features = ["derive"] }
 
 [dev-dependencies]
-reqwest_mock = "0.7.0"
+reqwest_mock = "0.7"

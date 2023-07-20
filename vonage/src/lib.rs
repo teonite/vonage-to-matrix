@@ -5,15 +5,15 @@ use serde;
 pub struct VonageInboundMessage {
     pub msisdn: String,
     pub to: String,
-    #[serde(alias = "messageId")]
+    #[serde(rename = "messageId")]
     pub message_id: String,
     pub text: String,
-    #[serde(alias = "type")]
+    #[serde(rename = "type")]
     pub message_type: String,
     pub keyword: String,
-    #[serde(alias = "api-key")]
+    #[serde(rename = "api-key")]
     pub api_key: String,
-    #[serde(alias = "message-timestamp")]
+    #[serde(rename = "message-timestamp")]
     pub message_timestamp: String,
 }
 
@@ -31,9 +31,4 @@ pub struct VonageInboundCall {
     pub call_end: String,
     pub call_price: String,
     pub call_rate: String,
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
 }
