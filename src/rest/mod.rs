@@ -64,8 +64,8 @@ pub fn config_service(config: &mut web::ServiceConfig) {
 
 fn read_app_config_from_file() -> Config {
     let filename = "config.toml";
-    let contents = fs::read_to_string(filename).unwrap(); // TODO Handle error
-    toml::from_str(&contents).unwrap() // TODO Handle error
+    let contents = fs::read_to_string(filename).expect("Error while reading config file");
+    toml::from_str(&contents).expect("Error while parsing config file")
 }
 
 pub fn config_app_data(config: &mut web::ServiceConfig) {
