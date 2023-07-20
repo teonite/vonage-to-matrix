@@ -8,7 +8,11 @@ pub async fn send_text_message(webhook_url: String, text: String) -> Result<Resp
     let mut map = HashMap::new();
     map.insert("text", text);
 
+    #[cfg(not(test))]
     let client = reqwest::Client::new();
+
+    #[cfg(test)]
+    let client = reqwest_mock::Client::new();
 
     client.post(webhook_url)
         .json(&map)

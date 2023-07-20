@@ -1,13 +1,37 @@
-use actix_web::{test, App};
-use vonage_to_matrix::rest::{config_service};
+use std::collections::HashMap;
+use actix_web::{test, App, web};
+use vonage_to_matrix::rest::{Config, config_service, HookshotConfig, VonageConfig};
 use vonage::{VonageInboundMessage, VonageInboundCall};
+
+
+fn config_app_data(config: &mut web::ServiceConfig) {
+    let hookshot_config = HookshotConfig {
+        url: String::from("https://example.com")
+    };
+
+    let vonage_config = VonageConfig {
+        labels: HashMap::from([
+            (String::from("48780909100"), String::from("Poland")),
+            (String::from("16692609100"), String::from("United States")),
+        ])
+    };
+
+    let app_config = Config {
+        hookshot: hookshot_config,
+        vonage: vonage_config,
+    };
+
+    config
+        .app_data(web::Data::new(app_config));
+}
 
 
 #[actix_web::test]
 async fn test_handle_inbound_message() {
     let app = test::init_service(
         App::new()
-            .configure(config_service),
+            .configure(config_service)
+            .configure(config_app_data)
     )
     .await;
 
@@ -32,7 +56,8 @@ async fn test_handle_inbound_message() {
 async fn test_handle_inbound_call() {
     let app = test::init_service(
         App::new()
-            .configure(config_service),
+            .configure(config_service)
+            .configure(config_app_data)
     )
     .await;
 
