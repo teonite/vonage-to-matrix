@@ -4,8 +4,8 @@ metadata:
   name: vonage-to-matrix
 spec:
   ports:
-  - name: "8080"
-    port: 8080
+  - name: "80"
+    port: 80
     targetPort: 8080
   selector:
     app: vonage-to-matrix
