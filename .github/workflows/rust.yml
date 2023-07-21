@@ -20,6 +20,23 @@ jobs:
     - name: Run tests
       run: cargo test --verbose
 
+    - name: Docker meta
+      id: meta
+      uses: docker/metadata-action@v4
+      with:
+        # list of Docker images to use as base name for tags
+        images: |
+          kchudy/vonage-to-matrix
+        # generate Docker tags based on the following events/attributes
+        tags: |
+          type=schedule
+          type=ref,event=branch
+          type=ref,event=pr
+          type=semver,pattern={{version}}
+          type=semver,pattern={{major}}.{{minor}}
+          type=semver,pattern={{major}}
+          type=sha
+
     - name: Log in to Docker Hub
       uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a
       with:
@@ -32,8 +49,6 @@ jobs:
         context: .
         file: ./Dockerfile
         push: true
-        tags:
-          - kchudy/vonage-to-matrix:${{github.run_number}}
-          - kchudy/vonage-to-matrix:latest
+        tags: ${{ steps.meta.outputs.tags }}
 
 
