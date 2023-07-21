@@ -1,5 +1,5 @@
 /target/
-/vonage/target/
-/hookshot/target/
+/vonage-rust/target/
+/matrix-hookshot-rust/target/
 /.idea/
 config.toml
