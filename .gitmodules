@@ -1,0 +1,6 @@
+[submodule "vonage-rust"]
+	path = vonage-rust
+	url = git@github.com:teonite/vonage-rust.git
+[submodule "matrix-hookshot-rust"]
+	path = matrix-hookshot-rust
+	url = git@github.com:teonite/matrix-hookshot-rust.git
