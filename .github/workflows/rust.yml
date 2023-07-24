@@ -26,7 +26,7 @@ jobs:
       with:
         # list of Docker images to use as base name for tags
         images: |
-          kchudy/vonage-to-matrix
+          ghcr.io/teonite/vonage-to-matrix
         # generate Docker tags based on the following events/attributes
         tags: |
           type=schedule
@@ -40,8 +40,9 @@ jobs:
     - name: Log in to Docker Hub
       uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a
       with:
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
+        registry: ghcr.io
+        username: ${{github.actor}}
+        password: ${{secrets.GITHUB_TOKEN}}
 
     - name: Build and push Docker image
       uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671
