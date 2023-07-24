@@ -2,8 +2,8 @@ FROM rust:1.71 AS builder
 WORKDIR /opt
 COPY Cargo.toml Cargo.lock ./
 COPY src ./src
-COPY vonage-rust ./vonage
-COPY matrix-hookshot-rust ./hookshot
+COPY vonage-rust ./vonage-rust
+COPY matrix-hookshot-rust ./matrix-hookshot-rust
 RUN cargo install --locked --path . --root /tmp
 
 FROM debian:bullseye-slim
