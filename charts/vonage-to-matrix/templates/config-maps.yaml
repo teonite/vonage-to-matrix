@@ -1,0 +1,10 @@
+apiVersion: v1
+data:
+  config.toml: |-
+{{ .Files.Get "config.toml" | indent 4 }}
+kind: ConfigMap
+metadata:
+  name: vonage-to-matrix-config
+  labels:
+    app: vonage-to-matrix
+    type: rust

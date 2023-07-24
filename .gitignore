@@ -2,4 +2,5 @@
 /vonage-rust/target/
 /matrix-hookshot-rust/target/
 /.idea/
-config.toml
+/config.toml
+/charts/vonage-to-matrix/config.toml

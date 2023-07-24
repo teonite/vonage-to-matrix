@@ -1,0 +1,7 @@
+[hookshot]
+url = "https://example.com/abc"
+
+[vonage]
+[vonage.labels]
+48111111111 = "Poland"
+12222222222 = "United States"
