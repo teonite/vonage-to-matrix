@@ -8,7 +8,7 @@ The service can be configured by editing the `config.toml` file.
 Place the webhook URL in the *hookshot* section like so:
 ```
 [hookshot]
-url = "https://hookshot.teonite.net/webhook/141d7f48-862e-42a8-a1e7-efab3a37ed09"
+url = "https://your-hookshot-domain/webhook/141d7f48-862e-42a8-a1e7-efab3a37ed09"
 ```
 # Configuring message and call forwarding in Vonage
 1. Sign in to vonage and add go to [your numbers](https://dashboard.nexmo.com/your-numbers).
